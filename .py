@@ -1,0 +1,147 @@
+# Load CIFAR-10 dataset
+(x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
+
+# Normalize pixel values (0-255 → 0-1)
+x_train, x_test = x_train / 255.0, x_test / 255.0
+
+# Build CNN Model
+model = keras.Sequential([
+    keras.layers.Conv2D(32, (3,3), activation='relu', input_shape=(32,32,3)),
+    keras.layers.MaxPooling2D((2,2)),
+    keras.layers.Conv2D(64, (3,3), activation='relu'),
+    keras.layers.MaxPooling2D((2,2)),
+    keras.layers.Conv2D(64, (3,3), activation='relu'),
+    keras.layers.Flatten(),
+    keras.layers.Dense(64, activation='relu'),
+    keras.layers.Dense(10, activation='softmax')
+])
+
+# Compile the Model
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+
+# Train the Model
+model.fit(x_train, y_train, epochs=10, validation_data=(x_test, y_test))
+
+# Evaluate the Model
+test_loss, test_acc = model.evaluate(x_test, y_test)
+print(f"Test Accuracy: {test_acc:.2f}")
+
+
+
+# Test Model on single image
+# Load a sample image
+sample_image = x_test[0]
+sample_label = y_test[0]
+
+# Predict the class
+prediction = model.predict(np.expand_dims(sample_image, axis=0))
+predicted_class = np.argmax(prediction)
+
+# Display the result
+plt.imshow(sample_image)
+plt.title(f"Predicted: {class_names[predicted_class]}, Actual: {class_names[sample_label[0]]}")
+plt.show()
+
+
+
+
+#Build Model 
+import tensorflow as tf
+from tensorflow import keras
+
+# Build CNN Model
+model = keras.Sequential([
+    # First Convolutional Layer
+    keras.layers.Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)),
+    keras.layers.MaxPooling2D((2, 2)),
+
+    # Second Convolutional Layer
+    keras.layers.Conv2D(64, (3, 3), activation='relu'),
+    keras.layers.MaxPooling2D((2, 2)),
+
+    # Third Convolutional Layer
+    keras.layers.Conv2D(64, (3, 3), activation='relu'),
+
+    # Flatten Layer
+    keras.layers.Flatten(),
+
+    # Fully Connected Layer
+    keras.layers.Dense(64, activation='relu'),
+
+    # Output Layer
+    keras.layers.Dense(10, activation='softmax')  # 10 output classes
+])
+
+# Compile the Model
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+# Print Model Summary
+model.summary()
+
+
+
+
+#Code to display sample images 
+import matplotlib.pyplot as plt
+
+# Class names in CIFAR-10
+class_names = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer', 'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
+
+# Display sample images
+plt.figure(figsize=(10, 5))
+for i in range(10):
+    plt.subplot(2, 5, i + 1)
+    plt.xticks([])  # Remove x-axis ticks
+    plt.yticks([])  # Remove y-axis ticks
+    plt.imshow(x_train[i])  # Display the image
+    plt.xlabel(class_names[y_train[i][0]])  # Display the label
+plt.show()
+
+
+
+#Combined code for building model and displaying sample images 
+import tensorflow as tf
+from tensorflow import keras
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load CIFAR-10 dataset
+(x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
+
+# Normalize pixel values (0-255 → 0-1)
+x_train, x_test = x_train / 255.0, x_test / 255.0
+
+# Class names in CIFAR-10
+class_names = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer', 'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
+
+# Display sample images
+plt.figure(figsize=(10, 5))
+for i in range(10):
+    plt.subplot(2, 5, i + 1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.imshow(x_train[i])
+    plt.xlabel(class_names[y_train[i][0]])
+plt.show()
+
+# Build CNN Model
+model = keras.Sequential([
+    keras.layers.Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)),
+    keras.layers.MaxPooling2D((2, 2)),
+    keras.layers.Conv2D(64, (3, 3), activation='relu'),
+    keras.layers.MaxPooling2D((2, 2)),
+    keras.layers.Conv2D(64, (3, 3), activation='relu'),
+    keras.layers.Flatten(),
+    keras.layers.Dense(64, activation='relu'),
+    keras.layers.Dense(10, activation='softmax')
+])
+
+# Compile the Model
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+# Print Model Summary
+model.summary()
